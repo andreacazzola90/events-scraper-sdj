@@ -24,7 +24,7 @@ async function getData(urlPage: URL) {
     } else if (url.includes("facebook")) {
       objHtml.title = page.querySelector("title").textContent;
       objHtml.description = page.querySelector(
-        "script[data-content-len='16902']"
+        "script[data-content-len='16902']",
       );
       //objHtml.image = page.querySelector("img");
     } else if (url.includes("visitschio.it")) {
@@ -42,8 +42,16 @@ async function getData(urlPage: URL) {
         .querySelector("img")
         .getAttribute("src")}`;
       objHtml.image = new URL(
-        "https://www.comune.schio.vi.it/alfstreaming-servlet/streamer/resourceId/c26b0267-09d0-4858-acf1-462670b0500d/HIMMAPAN"
+        "https://www.comune.schio.vi.it/alfstreaming-servlet/streamer/resourceId/c26b0267-09d0-4858-acf1-462670b0500d/HIMMAPAN",
       ).toString();
+    } else if (url.includes("faberbox.it")) {
+      objHtml.title = page.querySelector("h1.entry-title").textContent;
+      objHtml.description = page.querySelector(".entry-content").textContent;
+      objHtml.date = page.querySelector("strong[text='Data inizio evento']");
+      objHtml.image = page
+        .querySelector(".post-thumbnail")
+        .querySelector("img")
+        .getAttribute("src");
     }
 
     return objHtml;
